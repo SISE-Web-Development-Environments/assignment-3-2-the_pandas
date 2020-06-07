@@ -1,4 +1,3 @@
-
 var saltRounds = 14;
 const express = require("express");
 const bodyParser = require("body-parser");

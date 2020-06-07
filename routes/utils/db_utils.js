@@ -68,3 +68,18 @@ exports.registerNewUserInDb = async function (req,hash_password){
         email, photoUser) VALUES ('${req.body.userName}', '${req.body.firstName}','${req.body.lastName}'
         ,'${req.body.country}', '${hash_password}', '${req.body.email}','${req.body.linkimage}')`);
 }
+
+//create a new family recipe and insert it to the familyRecipes table
+exports.createNewFamilyRecipe = async function (recipe_params){
+  await this.execQuery(`INSERT INTO dbo.familyRecipes (user_id, Title, owner, periodOfTime, 
+      Instructions, ingredients, recipeImage) 
+      VALUES ('${recipe_params.username}', '${recipe_params.title}','${recipe_params.owner}',
+      '${recipe_params.periodOfTime}', '${recipe_params.instructions}', '${recipe_params.extendedIngredients}',
+      '${recipe_params.image}')`);
+}
+
+//gets recipes from familyRecipes table
+exports.getFamilyRecipes = async function (userID){
+  let familyRecipes = await this.execQuery(`select Title, owner from dbo.familyRecipes where user_id='${userID}'`);
+  return familyRecipes;
+}
