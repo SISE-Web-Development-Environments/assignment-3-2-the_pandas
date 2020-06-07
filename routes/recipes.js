@@ -86,7 +86,23 @@ router.post("/newRecipe",(req,res) => {
     });
 });
 
-
+//get-> function that gets the users personal recipes
+router.get("/getMyPersonalRecipes",(req,res) => {
+    console.log("im getting your personal recipes");
+    let user_id = req.session.user_id;
+    let result = db_util.getPersonalRecipes(user_id)
+    .then(() => {
+        if (result.length > 0)
+            res.sendStatus(200);
+        else{
+            console.log("you have no personal recipes");
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    });
+});
 
 
 module.exports = router;

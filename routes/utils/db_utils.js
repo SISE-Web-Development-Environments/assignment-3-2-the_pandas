@@ -56,6 +56,12 @@ exports.createNewRecipe = async function (recipe_params){
       '${recipe_params.instructions}', '${recipe_params.extendedIngredients}', '${recipe_params.servings}')`);
 }
 
+//gets recipes from personalRecipes table
+exports.getPersonalRecipes = async function (userID){
+  let personalRecipes = await this.execQuery(`select Title from dbo.personalRecipes where user_id='${userID}'`);
+  return personalRecipes;
+}
+
 // create a new user in database (user table) 
 exports.registerNewUserInDb = async function (req,hash_password){
   await this.execQuery(`INSERT INTO dbo.Users (username, firstname, lastname, country, userPassword,
