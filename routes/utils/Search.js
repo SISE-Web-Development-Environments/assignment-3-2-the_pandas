@@ -1,6 +1,5 @@
 const axios = require("axios");
 const recipes_api_url = "https://api.spoonacular.com/recipes";
-const random_api_url = "https://api.spoonacular.com/recipes/random?number=3?"
 const apikey = "apiKey=7392cc556233474799505cda45d21c03"
 
 

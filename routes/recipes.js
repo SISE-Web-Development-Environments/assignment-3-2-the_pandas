@@ -9,6 +9,7 @@ router.use((req,res,next) => {
    next();
 });
 
+//get -> 3 random recipes
 router.get("/",(req,res) => {
     console.log("getting 3 random recipes");
     search_params = {};
@@ -23,6 +24,7 @@ router.get("/",(req,res) => {
     });
 });
 
+//get -> search recipe by query and number of returned results
 router.get("/search/query/:searchQuery/amount/:num",(req,res) => {
     const {searchQuery,num} = req.params;
     search_params = {};
@@ -40,8 +42,8 @@ router.get("/search/query/:searchQuery/amount/:num",(req,res) => {
         res.sendStatus(500);
     });
 });
-//res.send(info_array)
 
+//get -> get information on a recipe by recipe ID
 router.get("/search/:recipeid",(req,res) => {
     const recipeid = req.params;
     let recipetoget = {};
@@ -58,6 +60,33 @@ router.get("/search/:recipeid",(req,res) => {
         res.sendStatus(500);
     });
 });
+
+//post -> create a new recipe
+router.post("/newRecipe",(req,res) => {
+    console.log("im uploading a new recipe");
+    recipe_params = {};
+    recipe_params.username = req.session.user_id;
+    recipe_params.title = req.body.title;
+    recipe_params.readyInMinutes = req.body.readyInMinutes;
+    recipe_params.image = req.body.image;
+    recipe_params.likes = 0;
+    recipe_params.vegan = req.body.vegan;
+    recipe_params.healthScore = req.body.healthScore;
+    recipe_params.vegetarian = req.body.vegetarian;
+    recipe_params.glutenFree = req.body.glutenFree;
+    recipe_params.instructions = req.body.instructions;
+    recipe_params.extendedIngredients = req.body.extendedIngredients;
+    recipe_params.servings = req.body.servings;
+    db_util.createNewRecipe(recipe_params).then(()=> {
+        res.sendStatus(200);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    });
+});
+
+
 
 
 module.exports = router;

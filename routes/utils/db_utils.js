@@ -42,3 +42,12 @@ exports.execQuery = async function (query) {
     if (pool) pool.close();
   }
 };
+
+exports.createNewRecipe = async function (recipe_params){
+  await this.execQuery(`INSERT INTO dbo.personalRecipes (user_id, Title, recipeImage, recipeTime, Likes, isVegan,
+      isVeryHealthy, isVegetarian, isGlutenFree, Instructions, ingredients, numOfMeals) 
+      VALUES ('${recipe_params.username}', '${recipe_params.title}','${recipe_params.image}',
+      '${recipe_params.readyInMinutes}', '${recipe_params.likes}', '${recipe_params.vegan}',
+      '${recipe_params.healthScore}', '${recipe_params.vegetarian}', '${recipe_params.glutenFree}',
+      '${recipe_params.instructions}', '${recipe_params.extendedIngredients}', '${recipe_params.servings}')`);
+}
