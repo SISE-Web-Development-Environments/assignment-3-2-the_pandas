@@ -12,17 +12,19 @@ require("dotenv").config();
 var db_util = require("./db_utils")
 const bcrypt = require("bcrypt");
 
-
+//gets all users from database(users table)
 async function getUsersFromDb(){
     let users = await db_util.execQuery("SELECT username, userPassword FROM dbo.Users");
     return users;
 }
 
+//gets specific user from users table
 async function getSpecificUserFromDb(username){
     let user = await db_util.execQuery("SELECT username,user_id,userPassword FROM dbo.Users WHERE username='"+username+"'");
     return user;
 }
 
+//checks if a username already exists in the database
 async function userFound(users,username){
     if (users.find((x) => x.userName === username)) {
         throw { status: 409, message: "Username taken" };
@@ -30,6 +32,7 @@ async function userFound(users,username){
     return;
 }
 
+//checks if the login password matches the hashed password
 function checkPasswordandhash(password, confirmedPassword){
     if (password === confirmedPassword) {
         let hash_password = bcrypt.hashSync(
@@ -43,10 +46,7 @@ function checkPasswordandhash(password, confirmedPassword){
     }
 }
 
-async function registerNewUserInDb(req,hash_password){
-    await DButils.execQuery(`INSERT INTO dbo.Users (username, firstname, lastname, country, userPassword, email, photoUser) VALUES ('${req.body.userName}', '${req.body.firstname}','${req.body.lastname}','${req.body.country}', '${hash_password}', '${req.body.email}','${req.body.linkimage}')`);
-}
-
+//login function
 async function attemptLogin(username, password){
     let users = await getUsersFromDb();
     if (!users.find((x) => x.username === username))
@@ -64,8 +64,6 @@ exports.attemptLogin = attemptLogin;
 exports.getUsersFromDb = getUsersFromDb;
 
 exports.userFound = userFound;
-
-exports.registerNewUserInDb = registerNewUserInDb;
 
 exports.checkPasswordandhash = checkPasswordandhash;
 
