@@ -1,0 +1,423 @@
+openapi: 3.0.0
+info:
+  title: Panda Recipe API
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/amitthewolf/recipes/v1
+  description: SwaggerHub API Auto Mocking
+paths:
+  /recipes/:
+    get:
+      tags:
+      - Recipes
+      summary: get 3 random recipes from the API
+      description: get recipes
+      parameters:
+      - name: body
+        in: path
+        description: get recipes from the database
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/minirecipeSchema'
+      responses:
+        "200":
+          description: got recipes
+        "404":
+          description: Invalid input
+  /recipes/search/{recipeID}:
+    get:
+      tags:
+      - Recipes
+      summary: returns a specific recipe
+      description: need to send the ID of the recipe
+      parameters:
+      - name: recipeID
+        in: path
+        description: code value of the recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: return recipe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedRecipeSchema'
+  /recipes/newFamilyRecipe:
+    post:
+      tags:
+      - Recipes
+      summary: adds a new family recipe to the current user
+      description: need to send the recipeID of a recipe
+      parameters:
+      - name: recipeID
+        in: path
+        description: code value of the recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FamilyRecipeSchema'
+      responses:
+        "200":
+          description: added recipe
+  /recipes/getMyFamilyRecipes:
+    get:
+      tags:
+      - Recipes
+      summary: returns the users family recipes
+      description: need to send the recipeID of a recipe
+      parameters:
+      - name: recipeID
+        in: path
+        description: code value of the recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: added recipe
+  /recipes/newRecipe:
+    post:
+      tags:
+      - Recipes
+      summary: adds a personal recipe to the current user
+      description: need to send the recipeID of a recipe
+      parameters:
+      - name: recipeID
+        in: path
+        description: code value of the recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalrecipeSchema'
+      responses:
+        "200":
+          description: added recipe
+  /recipes/getMyPersonalRecipes:
+    get:
+      tags:
+      - Recipes
+      summary: returns the users personal recipes
+      description: need to send the recipeID of a recipe
+      parameters:
+      - name: recipeID
+        in: path
+        description: code value of the recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: added recipe
+  /users/Favorite/{recipeid}:
+    get:
+      tags:
+      - Users
+      summary: adds a recipe as a favorite recipe
+      description: add user
+      parameters:
+      - name: recipeid
+        in: path
+        description: code value of the recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: user added
+        "405":
+          description: Invalid input
+  /users/getFavorites:
+    get:
+      tags:
+      - Users
+      summary: returns the users favorite recipes
+      description: get favorite recipes
+      responses:
+        "200":
+          description: user added
+        "405":
+          description: Invalid input
+  /users/lastWatched:
+    get:
+      tags:
+      - Users
+      summary: returns the 3 last seen recipes
+      description: get favorite recipes
+      responses:
+        "200":
+          description: user added
+        "405":
+          description: Invalid input
+  /auth/register:
+    post:
+      tags:
+      - Authentication
+      summary: registers a new user in the DB
+      description: need to send the recipeID of a recipe
+      parameters:
+      - name: recipeID
+        in: path
+        description: code value of the recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userRegisterSchema'
+      responses:
+        "200":
+          description: added recipe
+  /auth/login:
+    post:
+      tags:
+      - Authentication
+      summary: login
+      description: need to send the recipeID of a recipe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userLoginSchema'
+      responses:
+        "200":
+          description: added recipe
+  /auth/Logout:
+    post:
+      tags:
+      - Authentication
+      summary: logout
+      description: need to send the recipeID of a recipe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userLoginSchema'
+      responses:
+        "200":
+          description: added recipe
+components:
+  schemas:
+    minirecipeSchema:
+      type: object
+      properties:
+        Title:
+          type: string
+          description: Title
+        id:
+          type: string
+          description: recipe identifier
+        image:
+          type: string
+          description: recipe Image
+        vegan:
+          type: string
+          description: is Vegan
+        vegetarian:
+          type: string
+          description: is Vegetarian
+        glutenFree:
+          type: string
+          description: is Gluten Free
+        NumOfMeals:
+          type: number
+          description: number of meals
+        aggregateLikes:
+          type: string
+          description: ingredients
+        readyInMinutes:
+          type: string
+          description: instructions
+      example:
+        recipeID: Mango Salad
+        Ingrediants:
+        - Mango
+        - Onion
+        instructions: Cut up the mango and onion and mix together.
+    extendedRecipeSchema:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title
+        id:
+          type: string
+          description: recipe identifier
+        readyInMinutes:
+          type: string
+          description: recipe Time
+        image:
+          type: string
+          description: recipe Image
+        aggregateLikes:
+          type: number
+          description: Likes
+        vegan:
+          type: string
+          description: is Vegan
+        vegetarian:
+          type: string
+          description: is Vegetarian
+        glutenFree:
+          type: string
+          description: is Gluten Free
+        servings:
+          type: number
+          description: number of meals
+        pricePerServing:
+          type: number
+          description: number of meals
+        healthScore:
+          type: number
+          description: number of meals
+        cheap:
+          type: boolean
+          description: basa
+        extendedIngredients:
+          type: string
+          description: ingredients
+        instructions:
+          type: string
+          description: instructions
+    PersonalrecipeSchema:
+      type: object
+      properties:
+        Title:
+          type: string
+          description: Title
+        user_id:
+          type: string
+          description: user_id
+        recipe_Id:
+          type: string
+          description: recipe identifier
+        recipeTime:
+          type: string
+          description: recipe Time
+        recipeImage:
+          type: string
+          description: recipe Image
+        Likes:
+          type: string
+          description: Likes
+        isVegan:
+          type: string
+          description: is Vegan
+        isVeryHealthy:
+          type: string
+          description: is Very Healthy
+        isVegetarian:
+          type: string
+          description: is Vegetarian
+        isGlutenFree:
+          type: string
+          description: is Gluten Free
+        NumOfMeals:
+          type: number
+          description: number of meals
+        ingredients:
+          type: string
+          description: ingredients
+        instructions:
+          type: string
+          description: instructions
+    FamilyRecipeSchema:
+      type: object
+      properties:
+        Title:
+          type: string
+          description: Title
+        user_id:
+          type: string
+          description: user_id
+        recipe_Id:
+          type: string
+          description: recipe identifier
+        recipeImage:
+          type: string
+          description: recipe Image
+        Owner:
+          type: string
+          description: owner
+        PeriodOfTime:
+          type: string
+          description: Period Of Time
+        ingredients:
+          type: string
+          description: ingredients
+        instructions:
+          type: string
+          description: instructions
+    userRegisterSchema:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Unique username
+        first name:
+          type: string
+          description: user first name
+        last name:
+          type: string
+          description: user last name
+        country:
+          type: string
+          description: country of origin
+        password:
+          type: string
+          description: User Password
+        confirmedPassword:
+          type: string
+          description: User Password
+        email:
+          type: string
+          description: User Email
+      example:
+        username: pandawoman
+        first name: Jessica
+        last name: Smith
+        country: Italy
+        Password: ilikepandas4
+        confirmedPassword: ilikepandas4
+        email: pandawoman@gmail.com
+    userLoginSchema:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Unique username
+        password:
+          type: string
+          description: User Password
+      example:
+        username: pandawoman
+        Password: ilikepandas4
