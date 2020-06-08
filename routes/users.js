@@ -41,14 +41,6 @@ router.get("/getFavorites",(req,res) => {
     });
 });
 
-router.get("/recipeInfo/{ids}",(req,res) => {
-    const ids =JSON.parse( req.params.ids);
-    const user_name = req.user;
-    console.log(ids,user_name);
-    const userRecipesData= getUserInfoOnRecipes(user_name, ids);
-    res.send(userRecipesData);
-});
-
 router.get("/lastWatched/",(req,res) => {
     const id = req.session.user_id;
     Searcher.getLastSeenRecipes(id)

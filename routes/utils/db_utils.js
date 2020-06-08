@@ -13,7 +13,9 @@ const config = {
 };
 
 exports.updateUserandRecipe = async function (RecipeID,UserID){
-    await this.execQuery(`INSERT INTO dbo.UserRecipes (userID, recipeID, Viewed, Saved) VALUES ('${UserID}', '${RecipeID}','1','0')`);
+    var checkifexists = await this.execQuery(`select * from dbo.UserRecipes where userID = '${UserID}' and recipeID='${RecipeID}'`);
+    if (checkifexists.length == 0)
+      await this.execQuery(`INSERT INTO dbo.UserRecipes (userID, recipeID, Viewed, Saved) VALUES ('${UserID}', '${RecipeID}','1','0')`);
 }
 
 exports.updateSaveRecipe = async function (RecipeID,UserID){
