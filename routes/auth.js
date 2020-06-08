@@ -6,14 +6,6 @@ const { v1:uuidv1 } = require("uuid");
 const bcrypt = require("bcryptjs");
 const auth_util = require("./utils/auth_utils");
 
-// router.use((req,res,next) => {
-//     if(req.body.email && req.body.password) {
-//         next();
-//     }
-//     else
-//         res.sendStatus(401);
-// });
-
 module.exports = router;
 
 
@@ -56,16 +48,6 @@ function createNewUser(user_data,HashPass){
     db_util.execQuery(`INSERT INTO dbo.Users (username, firstname, lastname, country, userPassword, email, photoUser) VALUES ('${user_data.email}', 'Idan','Albilia','Israel', '${HashPass}', '${user_data.email}','wtf')`);
 }
 
-// async function checkifuserexists(username){
-//     let user = await auth_util.getSpecificUserFromDb(username);
-//     if(user.length==1)
-//     {
-//         return true;
-//     }
-//     else
-//     {
-//         return false;
-//     }
-// }
+
 
 
