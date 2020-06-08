@@ -31,6 +31,10 @@ exports.checkUserandRecipe = async function (RecipeID,UserID){
   }
 }
 
+exports.updateSaveRecipe = async function (RecipeID,UserID){
+  await this.execQuery(`update dbo.UserRecipes SET Saved='1' where userID='${UserID}' and  recipeID='${RecipeID}'`);
+}
+
 //function to excecute queries
 exports.execQuery = async function (query) {
   var pool = undefined;
@@ -62,6 +66,11 @@ exports.getPersonalRecipes = async function (userID){
   return personalRecipes;
 }
 
+exports.updateUserLastSeenRecipes = async function (RecipeID,UserID){
+  await this.execQuery(`delete from dbo.Watched_Recipes where user_id='${UserID}' and recipe_id=${RecipeID}`);
+  await this.execQuery(`INSERT INTO dbo.Watched_Recipes(recipe_id, user_id) VALUES ('${RecipeID}', '${UserID}');`);
+}
+
 // create a new user in database (user table) 
 exports.registerNewUserInDb = async function (req,hash_password){
   await this.execQuery(`INSERT INTO dbo.Users (username, firstname, lastname, country, userPassword,
@@ -80,6 +89,6 @@ exports.createNewFamilyRecipe = async function (recipe_params){
 
 //gets recipes from familyRecipes table
 exports.getFamilyRecipes = async function (userID){
-  var familyRecipes = await this.execQuery(`select Title, owner from dbo.familyRecipes where user_id='${userID}'`);
+  var familyRecipes = await this.execQuery(`select Title, owner, from dbo.familyRecipes where user_id='${userID}'`);
   return familyRecipes;
 }

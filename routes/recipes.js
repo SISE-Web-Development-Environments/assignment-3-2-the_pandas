@@ -53,6 +53,7 @@ router.get("/search/:recipeid",(req,res) => {
     Searcher.getFullRecipeInfo(recipetoget.id)
     .then((info_array) => {
         db_util.updateUserandRecipe(recipetoget.id.recipeid,req.session.user_id)
+        db_util.updateUserLastSeenRecipes(recipetoget.id.recipeid,req.session.user_id)
         res.send(info_array);
     })
     .catch((error) => {
@@ -91,9 +92,9 @@ router.get("/getMyPersonalRecipes",(req,res) => {
     console.log("im getting your personal recipes");
     let user_id = req.session.user_id;
     let result = db_util.getPersonalRecipes(user_id)
-    .then(() => {
+    .then((result) => {
         if (result.length > 0)
-            res.sendStatus(200);
+            res.send(result);
         else{
             console.log("you have no personal recipes");
             res.sendStatus(200);
@@ -132,7 +133,7 @@ router.get("/getMyFamilyRecipes",(req,res) => {
     let result = db_util.getFamilyRecipes(user_id)
     .then((result) => {
         if (result.length > 0)
-            res.sendStatus(200);
+            res.send(result);
         else{
             console.log("you have no family recipes");
             res.sendStatus(200);
