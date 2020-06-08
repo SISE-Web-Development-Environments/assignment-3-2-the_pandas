@@ -21,7 +21,7 @@ router.post("/register", async function(req, res){
     let user_data = req.body;
     let user = await auth_util.getSpecificUserFromDb(user_data.email);
     if(user.length==1)
-        res.send("Email address already exists. Login or use a different Email address.");
+        res.send("Username already exists. Login or use a different Email address or username.");
     else{
         try {
             let HashPass = await auth_util.checkPasswordandhash(user_data.password,user_data.confirmedPassword);
@@ -35,10 +35,10 @@ router.post("/register", async function(req, res){
 
 
 router.post("/login",async function(req, res){
-    let email = req.body.email;
+    let userName = req.body.userName;
     let pass = req.body.password;
     try {
-        let user = await auth_util.attemptLogin(email,pass)
+        let user = await auth_util.attemptLogin(userName,pass)
         req.session.user_id = user[0].user_id;
         res.status(200).send({ message: "login succeeded", success: true });
       } catch (error) {

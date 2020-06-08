@@ -18,6 +18,12 @@ async function getUsersFromDb(){
     return users;
 }
 
+async function getSpecificUserFromDbwithid(id){
+    let user = await db_util.execQuery("SELECT username,user_id,userPassword FROM dbo.Users WHERE user_id='"+id+"'");
+    return user;
+}
+
+//gets specific user from users table
 async function getSpecificUserFromDb(username){
     let user = await db_util.execQuery("SELECT username,user_id,userPassword FROM dbo.Users WHERE username='"+username+"'");
     return user;

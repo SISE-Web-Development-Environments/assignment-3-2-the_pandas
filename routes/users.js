@@ -17,7 +17,6 @@ router.use((req,res,next) => {
     }
 });
 
-//get -> get information on a recipe by recipe ID
 router.get("/Favorite/:recipeid",(req,res) => {
     const recipeid = req.params;
     let RecipeToSave = recipeid;
@@ -31,7 +30,6 @@ router.get("/Favorite/:recipeid",(req,res) => {
     });
 });
 
-//get -> get information on a recipe by recipe ID
 router.get("/getFavorites",(req,res) => {
     const id = req.session.user_id;
     Searcher.getFavoriteRecipes(id)

@@ -1,7 +1,7 @@
 const axios = require("axios");
 const recipes_api_url = "https://api.spoonacular.com/recipes";
-const apikey = "apiKey=7392cc556233474799505cda45d21c03"
-var db_util = require("./db_utils")
+const apikey = "apiKey=7392cc556233474799505cda45d21c03";
+var db_util = require("./db_utils");
 
 
 function extractQueriesParams(query_params,search_params) {
@@ -66,6 +66,26 @@ async function searchForRecipes(search_params) {
         }
     );
     relevantRecipeData = extractRandomRelevantRecipeData(info_response.data.recipes);
+    console.log("returned recipes:"+relevantRecipeData);
+    return relevantRecipeData;
+ };
+
+ async function getLastSeenRecipes(user_id) {
+    let lastSeenRecipes= await db_util.execQuery(`SELECT top 3 recipe_id FROM dbo.Watched_Recipes WHERE user_id = '${user_id}' ORDER BY time DESC`);
+    let promises = [];
+    lastSeenRecipes.map((id) => promises.push(axios.get(recipes_api_url+"/"+id.recipe_id+"/information?"+apikey)));
+    let info_response = await Promise.all(promises);
+    relevantRecipeData = extractRelevantRecipeData(info_response);
+    console.log("returned recipes:"+relevantRecipeData);
+    return relevantRecipeData;
+ };
+
+ async function getFavoriteRecipes(user_id) {
+    let FavRecipes= await db_util.execQuery(`SELECT recipeID FROM dbo.UserRecipes WHERE userID='${user_id}' and Saved='1'`);
+    let promises = [];
+    FavRecipes.map((FavRecipe) => promises.push(axios.get(recipes_api_url+"/"+FavRecipe.recipeID+"/information?"+apikey)));
+    let info_response = await Promise.all(promises);
+    relevantRecipeData = extractRelevantRecipeData(info_response);
     console.log("returned recipes:"+relevantRecipeData);
     return relevantRecipeData;
  };

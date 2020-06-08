@@ -87,6 +87,63 @@ router.post("/newRecipe",(req,res) => {
     });
 });
 
+//get-> function that gets the users personal recipes
+router.get("/getMyPersonalRecipes",(req,res) => {
+    console.log("im getting your personal recipes");
+    let user_id = req.session.user_id;
+    let result = db_util.getPersonalRecipes(user_id)
+    .then((result) => {
+        if (result.length > 0)
+            res.send(result);
+        else{
+            console.log("you have no personal recipes");
+            res.sendStatus(200);
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    });
+});
+
+//post -> create a new family recipe
+router.post("/newFamilyRecipe",(req,res) => {
+    console.log("im uploading a new family recipe");
+    recipe_params = {};
+    recipe_params.username = req.session.user_id;
+    recipe_params.title = req.body.title;
+    recipe_params.owner = req.body.owner;
+    recipe_params.image = req.body.image;
+    recipe_params.periodOfTime = req.body.periodOfTime;
+    recipe_params.instructions = req.body.instructions;
+    recipe_params.extendedIngredients = req.body.extendedIngredients;
+    db_util.createNewFamilyRecipe(recipe_params).then(()=> {
+        res.sendStatus(200);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    });
+});
+
+//get-> function that gets the users family recipes
+router.get("/getMyFamilyRecipes",(req,res) => {
+    console.log("im getting your family recipes");
+    let user_id = req.session.user_id;
+    let result = db_util.getFamilyRecipes(user_id)
+    .then((result) => {
+        if (result.length > 0)
+            res.send(result);
+        else{
+            console.log("you have no family recipes");
+            res.sendStatus(200);
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    });
+});
 
 
 
