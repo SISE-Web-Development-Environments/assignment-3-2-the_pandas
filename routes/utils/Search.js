@@ -160,7 +160,7 @@ async function searchForRecipes(search_params) {
             pricePerServing,
             healthScore,
             cheap,
-            instructions,
+            analyzedInstructions,
             extendedIngredients,
             aggregateLikes,
             vegetarian,
@@ -176,7 +176,7 @@ async function searchForRecipes(search_params) {
             pricePerServing: pricePerServing,
             healthScore: healthScore,
             cheap: cheap,
-            instructions: instructions,
+            instructions: analyzedInstructions,
             JsonIngredients: getIngredientNamesAndAmounts(extendedIngredients),
             aggregateLikes: aggregateLikes,
             vegetarian: vegetarian,
@@ -186,6 +186,18 @@ async function searchForRecipes(search_params) {
         };
     });
  }
+ 
+//  function getinstructions(instructions){
+//     return instructions.map((instructions) => {
+//         const {
+//             original,
+//         } = instructions;
+//         return {
+//             NameAndAmount: original,
+//         };
+//     });
+// }
+
 
  function getIngredientNamesAndAmounts(JsonIngredients){
     return JsonIngredients.map((ingrediant_info) => {
