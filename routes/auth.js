@@ -13,9 +13,7 @@ router.post("/register", async function (req, res) {
   let user_data = req.body;
   let user = await auth_util.getSpecificUserFromDb(user_data.userName);
   if (user.length == 1)
-    res
-      .sendStatus(500)
-      .send("Username already exists. Login or use a different username.");
+    res.send("Username already exists. Login or use a different username.");
   else {
     try {
       let HashPass = await auth_util.checkPasswordandhash(
