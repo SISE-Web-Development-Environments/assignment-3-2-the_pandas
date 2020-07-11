@@ -15,7 +15,9 @@ router.post("/register", async function (req, res) {
   if (user.length == 1)
     res
       .sendStatus(400)
-      .send("Username already exists. Login or use a different username.");
+      .statusMessage(
+        "Username already exists. Login or use a different username."
+      );
   else {
     try {
       let HashPass = await auth_util.checkPasswordandhash(
