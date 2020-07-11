@@ -64,7 +64,7 @@ function checkPasswordandhash(password, confirmedPassword) {
 
 async function registerNewUserInDb(req, hash_password) {
   await DButils.execQuery(
-    `INSERT INTO dbo.Users (username, firstname, lastname, country, userPassword, email, photoUser) VALUES ('${req.body.username}', '${req.body.firstname}','${req.body.lastname}','${req.body.country}', '${hash_password}', '${req.body.email}','${req.body.photo}')`
+    `INSERT INTO dbo.Users (username, firstname, lastname, country, userPassword, email, photoUser) VALUES ('${req.body.userName}', '${req.body.firstname}','${req.body.lastname}','${req.body.country}', '${hash_password}', '${req.body.email}','${req.body.linkimage}')`
   );
 }
 
