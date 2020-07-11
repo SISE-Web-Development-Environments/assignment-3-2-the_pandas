@@ -5,6 +5,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const session = require("client-sessions");
 
+
+
 // routes
 const auth = require("./routes/auth.js");
 const users = require("./routes/users");
@@ -33,6 +35,9 @@ app.use(
         secret: "PandaCookie",
         duration: 24*1000*3600,
         activeDuration: 0,
+        cookie: {
+            httpOnly: false
+        }
     })
 );
 
