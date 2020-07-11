@@ -38,7 +38,7 @@ app.use(
         activeDuration: 0,
         cookie: {
             httpOnly: false,
-            secure: true
+            secure: false
         }
     })
 );
