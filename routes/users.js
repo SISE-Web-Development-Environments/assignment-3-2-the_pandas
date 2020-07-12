@@ -22,7 +22,7 @@ router.get("/Favorite/:recipeid",(req,res) => {
     let RecipeToSave = recipeid;
     db_util.updateSaveRecipe(RecipeToSave.recipeid, req.session.user_id)
     .then(() => {
-        res.sendStatus(200);
+        res.send("hopa");
     })
     .catch((error) => {
         console.log(error);
