@@ -39,9 +39,10 @@ app.use(
         secret: "PandaCookie",
         duration: 24*1000*3600,
         activeDuration: 0,
-        // cookie: {
-        //     httpOnly: false
-        // }
+        cookie: {
+            httpOnly: false,
+            ephemeral: true
+        }
     })
 );
 
