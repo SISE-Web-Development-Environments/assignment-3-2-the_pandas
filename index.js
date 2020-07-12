@@ -21,13 +21,15 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan(":method :url :status :response-time ms"));
 
-const corsConfig = {
-    origin: true,
-    credentials: true
-  };
+// const corsConfig = {
+//     origin: true,
+//     credentials: true
+//   };
   
-app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
+// app.use(cors(corsConfig));
+// app.options("*", cors(corsConfig));
+app.use(cors());
+app.options("*", cors());
 
 
 app.use(
