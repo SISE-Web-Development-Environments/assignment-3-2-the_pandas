@@ -20,7 +20,6 @@ exports.updateUserandRecipe = async function (RecipeID,UserID){
 
 exports.updateSaveRecipe = async function (RecipeID,UserID){
   await this.execQuery(`update dbo.UserRecipes SET Saved='1' where userID='${UserID}' and  recipeID='${RecipeID}'`);
-  return true;
 }
 
 

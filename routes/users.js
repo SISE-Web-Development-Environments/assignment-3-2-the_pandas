@@ -21,8 +21,8 @@ router.get("/Favorite/:recipeid",(req,res) => {
     const recipeid = req.params;
     let RecipeToSave = recipeid;
     db_util.updateSaveRecipe(RecipeToSave.recipeid, req.session.user_id)
-    .then((Success) => {
-        res.send(Success);
+    .then(() => {
+        res.send( {Message: "Recipe saved"});
     })
     .catch((error) => {
         console.log(error);
