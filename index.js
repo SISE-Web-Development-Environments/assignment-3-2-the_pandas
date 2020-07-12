@@ -1,11 +1,10 @@
+require('dotenv').config();
 // Libraries
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const session = require("client-sessions");
-require('dotenv').config();
-
 
 
 // routes
@@ -22,13 +21,13 @@ app.use(bodyParser.json());
 app.use(morgan(":method :url :status :response-time ms"));
 
 
-const corsConfig = {
-    origin: true,
-    credentials: true,
-  };
-app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
-
+// const corsConfig = {
+//     origin: true,
+//     credentials: true,
+//   };
+// app.use(cors(corsConfig));
+// app.options("*", cors(corsConfig));
+app.use(cors());
 
 
 app.use(
