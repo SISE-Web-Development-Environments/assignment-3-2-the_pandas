@@ -18,7 +18,7 @@ const port =process.env.PORT || "4000";
 
 // app.use(cors());
 const corsConfig = {
-    origin: true,
+    origin: false,
     credentials: true,
   };
 app.use(cors(corsConfig));
