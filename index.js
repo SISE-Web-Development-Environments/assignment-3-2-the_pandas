@@ -1,9 +1,9 @@
-require('dotenv').config();
 // Libraries
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
+require('dotenv').config();
 const session = require("client-sessions");
 
 
@@ -12,22 +12,25 @@ const auth = require("./routes/auth.js");
 const users = require("./routes/users");
 const recipes = require("./routes/recipes");
 
-
 // app settings and config
 const app = express();
 const port =process.env.PORT || "4000";
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-app.use(morgan(":method :url :status :response-time ms"));
 
-
+// app.use(cors());
 const corsConfig = {
     origin: true,
     credentials: true,
   };
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
-// app.use(cors());
+
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(morgan(":method :url :status :response-time ms"));
+
+
+
 
 
 app.use(
@@ -36,9 +39,9 @@ app.use(
         secret: "PandaCookie",
         duration: 24*1000*3600,
         activeDuration: 0,
-        cookie: {
-            httpOnly: false
-        }
+        // cookie: {
+        //     httpOnly: false
+        // }
     })
 );
 
