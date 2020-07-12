@@ -50,6 +50,7 @@ router.get("/search/:recipeid",(req,res) => {
     recipetoget.id = recipeid;
     recipetoget.instructionsRequired = true;
     console.log(req.query);
+    console.log("fetching a recipe for userid:"+req.session.user_id);
     Searcher.getFullRecipeInfo(recipetoget.id)
     .then((info_array) => {
         db_util.updateUserandRecipe(recipetoget.id.recipeid,req.session.user_id)

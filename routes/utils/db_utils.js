@@ -28,7 +28,7 @@ exports.checkUserandRecipe = async function (RecipeID,UserID){
   stats.Viewed = false;
   stats.Saved = false;
   let Results = await this.execQuery(`select Viewed,Saved from dbo.UserRecipes where userID='${UserID}' and recipeID='${RecipeID}'`);
-  console.log("betsim");
+  console.log("checking recipe for Userid:"+UserID);
   if (Results.length == 0)
     return stats;
   else {
