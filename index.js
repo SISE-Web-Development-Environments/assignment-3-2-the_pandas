@@ -21,15 +21,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan(":method :url :status :response-time ms"));
 
-// const corsConfig = {
-//     origin: true,
-//     credentials: true
-//   };
-  
-// app.use(cors(corsConfig));
-// app.options("*", cors(corsConfig));
-app.use(cors());
-app.options("*", cors());
+
+const corsConfig = {
+    origin: true,
+    credentials: true,
+  };
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
+
 
 
 app.use(
@@ -38,10 +37,9 @@ app.use(
         secret: "PandaCookie",
         duration: 24*1000*3600,
         activeDuration: 0,
-        // cookie: {
-        //     httpOnly: false,
-        //     secure: false
-        // }
+        cookie: {
+            httpOnly: false
+        }
     })
 );
 
