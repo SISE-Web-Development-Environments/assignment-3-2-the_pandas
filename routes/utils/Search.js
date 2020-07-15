@@ -1,7 +1,7 @@
 const axios = require("axios");
 const recipes_api_url = "https://api.spoonacular.com/recipes";
-// const apikey = "apiKey=7392cc556233474799505cda45d21c03";
-const apikey = "apiKey=9a41196304c94b8687afe011fc6657da";
+const apikey = "apiKey=7392cc556233474799505cda45d21c03";
+// const apikey = "apiKey=9a41196304c94b8687afe011fc6657da";
 // const apikey = "apiKey=618963d05679493090e36fd363e7a0f1";
 // const apikey = "apiKey=918ea6a0e4f643abbae00da33223e48e";
 var db_util = require("./db_utils");
