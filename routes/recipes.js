@@ -35,7 +35,6 @@ router.get("/search/query/:searchQuery/amount/:num",(req,res) => {
     search_params.instructionsRequired = true;
     console.log(req.query);
     Searcher.extractQuerieParams(req.query,search_params);
-
     Searcher.SearchForRecipes(search_params)
     .then((info_array) => {
         res.send(info_array);

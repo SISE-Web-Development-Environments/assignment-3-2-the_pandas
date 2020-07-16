@@ -58,7 +58,9 @@ router.get("/lastWatched/",(req,res) => {
     const id = req.session.user_id;
     Searcher.getLastSeenRecipes(id)
     .then((info_array) => {
-        res.send(info_array);
+         return db_util.checkUserandRecipe(info_array,req.session.user_id)
+    }).then((Recipes) => {
+        res.send(Recipes);
     }).catch((error) => {
         console.log(error);
         res.sendStatus(500);
