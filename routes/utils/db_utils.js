@@ -23,18 +23,40 @@ exports.updateSaveRecipe = async function (RecipeID,UserID){
 }
 
 
-exports.checkUserandRecipe = async function (RecipeID,UserID){
+exports.checkUserandRecipe = async function (recipes,UserID){
   let stats = {};
   stats.Viewed = false;
   stats.Saved = false;
-  let Results = await this.execQuery(`select Viewed,Saved from dbo.UserRecipes where userID='${UserID}' and recipeID='${RecipeID}'`);
-  console.log("checking recipe for Userid:"+UserID);
-  if (Results.length == 0)
-    return stats;
-  else {
-
+  for (let index = 0; index < recipes.length; index++) {
+    console.log("WAWA:"+recipes[index].id);
+    var test = await this.execQuery(`select Viewed,Saved from dbo.UserRecipes where userID='${UserID}' and recipeID='${recipes[index].id}'`);
+    if(test.length>0)
+    {
+      recipes[index].Viewed = test[0].Viewed
+      recipes[index].Saved = test[0].Saved
+    }
+    else {
+      recipes[index].Viewed = false
+      recipes[index].Saved = false
+    }
   }
+  console.log(recipes);
+  return recipes;
 }
+
+
+// exports.checkUserandRecipe = async function (RecipeID,UserID){
+//   let stats = {};
+//   stats.Viewed = false;
+//   stats.Saved = false;
+//   let Results = await this.execQuery(`select Viewed,Saved from dbo.UserRecipes where userID='${UserID}' and recipeID='${RecipeID}'`);
+//   console.log("checking recipe for Userid:"+UserID);
+//   if (Results.length == 0)
+//     return stats;
+//   else {
+
+//   }
+// }
 
 exports.updateUserLastSeenRecipes = async function (RecipeID,UserID){
   await this.execQuery(`delete from dbo.Watched_Recipes where user_id='${UserID}' and recipe_id=${RecipeID}`);

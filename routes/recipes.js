@@ -16,8 +16,10 @@ router.get("/",(req,res) => {
     search_params.number = 3;
     Searcher.getRandomRecipeInfo(search_params)
     .then((info_array) => {
-        db_util.checkUserandRecipe(info_array[0].id,req.session.user_id)
-        res.send(info_array);
+        // db_util.checkUserandRecipe(info_array[0].id,req.session.user_id);
+        return db_util.checkUserandRecipe(info_array,req.session.user_id)
+    }).then((Recipes) => {
+        res.send(Recipes);
     }).catch((error) => {
         console.log(error);
         res.sendStatus(500);
