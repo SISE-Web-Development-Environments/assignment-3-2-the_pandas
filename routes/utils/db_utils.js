@@ -93,7 +93,7 @@ exports.createNewRecipe = async function (recipe_params){
 
 //gets recipes from personalRecipes table
 exports.getPersonalRecipes = async function (userID){
-  var personalRecipes = await this.execQuery(`select Title from dbo.personalRecipes where user_id='${userID}'`);
+  var personalRecipes = await this.execQuery(`select * from dbo.personalRecipes where user_id='${userID}'`);
   return personalRecipes;
 }
 
@@ -120,6 +120,6 @@ exports.createNewFamilyRecipe = async function (recipe_params){
 
 //gets recipes from familyRecipes table
 exports.getFamilyRecipes = async function (userID){
-  var familyRecipes = await this.execQuery(`select Title, owner, from dbo.familyRecipes where user_id='${userID}'`);
+  var familyRecipes = await this.execQuery(`select * from dbo.familyRecipes where user_id='${userID}'`);
   return familyRecipes;
 }
