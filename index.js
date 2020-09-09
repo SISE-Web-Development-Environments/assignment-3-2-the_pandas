@@ -12,6 +12,10 @@ const auth = require("./routes/auth.js");
 const users = require("./routes/users");
 const recipes = require("./routes/recipes");
 
+//ToDelete -----------------------------------------
+const Zoo = require("./routes/Zoo");
+// -------------------------------------------------
+
 // app settings and config
 const app = express();
 const port =process.env.PORT || "4000";
@@ -64,6 +68,7 @@ app.use(function(req, res, next) {
 //routing
 app.use("/users",users);
 app.use("/recipes",recipes);
+app.use("/Zoo",Zoo);
 app.use(auth);
 
 //default router
